@@ -1,0 +1,31 @@
+name: Add Labels
+
+on:
+  pull_request:
+    types: [opened, edited]
+
+jobs:
+  add_labels:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+
+      - uses: actions-ecosystem/action-remove-labels@v1
+        with:
+          labels: |
+            kind/feature
+            kind/bug
+      - uses: actions-ecosystem/action-regex-match@v2
+        id: regex-match
+        with:
+          text: ${{ github.event.pull_request.title }} # e.g. "Test: AB#16845 try to return PR number"
+          regex: '^\[(.*?)\]/'
+      - name: Echo extracted title
+        run: |
+          echo "${{ steps.regex-match.outputs.group1 }}"
+      - name: add labels
+        uses: actions-ecosystem/action-add-labels@v1
+        with:
+          labels:
+             kind/${{ steps.regex-match.outputs.group1 }}
