@@ -21,10 +21,12 @@ jobs:
         id: regex-match
         with:
           text: ${{ github.event.pull_request.body }}
-          regex: '^.*foo.*$'
+          regex: '^.*fede.*$'
+
+      - name: Debug
+        run: |
+          echo '${{ steps.regex-match.outputs.group1}}'
 
       - uses: actions-ecosystem/action-add-labels@v1
-        if: ${{ steps.regex-match.outputs.match != '' }}
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
           labels: ${{ steps.regex-match.outputs.group1 }}
