@@ -1,0 +1,29 @@
+name: Add Labels
+
+on:
+  pull_request:
+    types: [opened, edited]
+
+jobs:
+  add_labels:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+
+      - uses: actions-ecosystem/action-remove-labels@v1
+        with:
+          labels: |
+            kind/feature
+            kind/bug
+      - uses: actions-ecosystem/action-regex-match@v2
+        id: regex-match
+        with:
+          text: ${{ github.event.comment.body }}
+          regex: '^/label\s*(.*?)\s*$'
+
+      - uses: actions-ecosystem/action-add-labels@v1
+        if: ${{ steps.regex-match.outputs.match != '' }}
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          labels: ${{ steps.regex-match.outputs.group1 }}
