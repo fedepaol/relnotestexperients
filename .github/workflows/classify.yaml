@@ -23,13 +23,18 @@ jobs:
           text: ${{ github.event.pull_request.body }}
           regex: '/kind (\w+)'
 
-      - name: Debug
+      - name: Check
         run: |
           echo '${{ steps.regex-match.outputs.group1 }}'
           echo '${{ steps.regex-match.outputs.match }}'
           echo '${{ github.event.pull_request.title }}'
           echo '${{ github.event.pull_request.body }}'
 
+          if [[ "${{ steps.regex-match.outputs.group1 }}" =~ ^(bug|feature)$ ]]; then
+              echo "$WORD is in the list"
+          else
+            exit 1
+          fi
       - uses: actions-ecosystem/action-add-labels@v1
         with:
-          labels: ${{ steps.regex-match.outputs.match }}
+          labels: kind-${{ steps.regex-match.outputs.group1 }}
