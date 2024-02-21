@@ -20,7 +20,7 @@ jobs:
       - uses: actions-ecosystem/action-regex-match@v2
         id: regex-match
         with:
-          text: ${{ github.event.pull_request.body }}
+          text: ${{ github.event.pull_request.title }}
           regex: '^.*fede.*$'
 
       - name: Debug
