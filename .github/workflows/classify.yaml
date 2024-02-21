@@ -25,7 +25,9 @@ jobs:
 
       - name: Debug
         run: |
-          echo '${{ steps.regex-match.outputs.group1}}'
+          echo '${{ steps.regex-match.outputs.group1 }}'
+          echo '${{ steps.regex-match.outputs.match }}'
+          echo '${{ github.event.pull_request.title }}'
 
       - uses: actions-ecosystem/action-add-labels@v1
         with:
