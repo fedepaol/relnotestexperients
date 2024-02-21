@@ -28,7 +28,7 @@ jobs:
       - uses: actions-ecosystem/action-regex-match@v2
         id: regex-match
         with:
-          text: ${{ github.event.pull_request.bodyText }}
+          text: ${{ github.event.pull_request.body }}
           regex: '(?<!>)\/kind (\w+)'
 
 
