@@ -28,6 +28,7 @@ jobs:
           echo '${{ steps.regex-match.outputs.group1 }}'
           echo '${{ steps.regex-match.outputs.match }}'
           echo '${{ github.event.pull_request.title }}'
+          echo '${{ github.event.pull_request.body }}'
 
       - uses: actions-ecosystem/action-add-labels@v1
         with:
