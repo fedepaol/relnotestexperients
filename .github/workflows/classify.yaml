@@ -35,11 +35,6 @@ jobs:
 
       - name: Check
         run: |
-          echo '${{ steps.regex-match.outputs.group1 }}'
-          echo '${{ steps.regex-match.outputs.match }}'
-          echo '${{ github.event.pull_request.title }}'
-          echo '${{ github.event.pull_request.body }}'
-
           if [[ ! "${{ steps.regex-match.outputs.group1 }}" =~ ^(api-change|bug|cleanup|deprecation|design|documentation|failing|feature|flake|regression)$ ]]; then
             echo "kind must belong to
                   - api-change \
