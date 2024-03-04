@@ -58,6 +58,6 @@ jobs:
         uses: actions/github-script@v5
         with:
           script: |
-            if (!github.event.pull_request.body("```release-notes")) {
+            if (!${{github.event.pull_request.body}}.includes("```release-notes")) {
               throw new Error("Please don't cancel the ```release-note ``` section as it is used to build the release notes");
             }
