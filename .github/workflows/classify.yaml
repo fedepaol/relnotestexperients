@@ -58,6 +58,11 @@ jobs:
         uses: actions/github-script@v5
         with:
           script: |
-            if (!${{github.event.pull_request.body}}.includes("```release-notes")) {
+            const pr = await github.rest.pulls.get({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.issue.number
+            });
+            if (!pr.data.body.includes("```release-notes")) {
               throw new Error("Please don't cancel the ```release-note ``` section as it is used to build the release notes");
             }
