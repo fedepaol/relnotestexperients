@@ -53,3 +53,10 @@ jobs:
       - uses: actions-ecosystem/action-add-labels@v1
         with:
           labels: kind/${{ steps.regex-match.outputs.group1 }}
+
+      - name: Check release notes were not deleted
+        if: not contains(```release-note), github.event.pull_request.body
+        run:
+          echo "Please don't cancel the ```release-note ``` section as it is used to build the release notes"
+          echo "In case no user impact is added, please fill it with NONE"
+          exit 1
